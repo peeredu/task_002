@@ -55,5 +55,6 @@ jobs:
 
     - name: Check code style with clang-format
       run: |
+        cp clang/.clang-format src/
         clang-format -n src/*.c src/*.h | grep -q "formatted" && exit 1 || true
  
