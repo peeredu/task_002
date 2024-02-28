@@ -1,7 +1,6 @@
 #include "pascal_functions.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 
 int binom_coeff(int n, int k) {
