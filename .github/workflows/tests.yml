@@ -45,10 +45,6 @@ jobs:
   clang-format-check:
     runs-on: ubuntu-latest
 
-    paths:
-      - 'src/**.c'
-      - 'src/**.h'
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -58,6 +54,7 @@ jobs:
 
     - name: Check code formatting
       run: |
+        cp clang/.clang-format .
         CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '\.(c|h)$')
         if [ -n "$CHANGED_FILES" ]; then
           for FILE in $CHANGED_FILES; do
