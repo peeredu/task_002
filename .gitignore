@@ -1,0 +1,7 @@
+venv
+a.exe
+copy.c
+.pytest_cache
+__pycache__
+bin/pascal_triangle.exe
+bin/pascal_triangle

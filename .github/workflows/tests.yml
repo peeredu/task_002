@@ -33,3 +33,25 @@ jobs:
       with:
         name: pytest-results
         path: pytest_report.html
+
+
+  style-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up clang-format
+      run: |
+        sudo apt-get install -y clang-format
+
+    - name: Check code style with clang-format
+      run: |
+        cp clang/.clang-format .
+        if clang-format -n --Werror src/*.c src/*.h; then
+          echo "clang-format check passed"
+        else
+          echo "clang-format check failed. Hey, frogger, use clang-format to fix the style issues."
+          exit 1
+        fi
