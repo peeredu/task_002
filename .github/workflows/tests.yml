@@ -34,12 +34,29 @@ jobs:
         name: pytest-results
         path: pytest_report.html
 
-    - name: Install clang-format
-      run: sudo apt-get install -y clang-format
+    # - name: Install clang-format
+    #   run: sudo apt-get install -y clang-format
 
-    - name: Check clang-format
+    # - name: Check clang-format
+    #   run: |
+    #     for file in $(git ls-files 'src/*.c' 'src/*.h'); do
+    #       clang-format -n -style=$(pwd)/clang/.clang-format $file
+    #     done
+  style-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up clang-format
       run: |
-        for file in $(git ls-files 'src/*.c' 'src/*.h'); do
-          clang-format -n -style=$(pwd)/clang/.clang-format $file
-        done
+        sudo apt-get install -y clang-format
 
+    - name: Check Code Style with clang-format
+      run: |
+        if [ -n "$(clang-format -output-replacements-xml -n -style=file $(find . -name '*.cpp' -or -name '*.h'))" ]; then
+          echo "Code style issues found. Please run clang-format to fix them.";
+          exit 1;
+        fi
+      shell: bash
