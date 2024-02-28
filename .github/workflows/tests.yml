@@ -33,3 +33,13 @@ jobs:
       with:
         name: pytest-results
         path: pytest_report.html
+
+    - name: Install clang-format
+      run: sudo apt-get install -y clang-format
+
+    - name: Check clang-format
+      run: |
+        CLANG_FORMAT_STYLE=clang/.clang-format
+        for file in $(git ls-files 'src/*.c' 'src/*.h'); do
+          clang-format -n -style=$CLANG_FORMAT_STYLE $file
+        done
