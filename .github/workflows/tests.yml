@@ -57,17 +57,19 @@ jobs:
       id: clang-format-check
       run: |
         cp clang/.clang-format src/
-        if clang-format -n src/*.c src/*.h | tee /dev/tty | (grep -q "warning" && echo "::set-output name=warnings::true" || echo "::set-output name=warnings::false")
+        if clang-format -n src/*.c src/*.h | tee /dev/tty | (grep -q "warning" && echo "warnings_found=true" || echo "warnings_found=false")
         then
-          echo "No clang-format warnings found"
-        else
           echo "Clang-format warnings found"
+        else
+          echo "No clang-format warnings found"
         fi
-
-    - name: Set output variable
-      if: steps.clang-format-check.outputs.warnings == 'true'
-      run: echo "Clang-format warnings found" && echo "::set-output name=exit-code::1" || echo "::set-output name=exit-code::0"
+        echo "::set-env name=CLANG_FORMAT_WARNINGS::$warnings_found"
 
     - name: Fail if clang-format warnings found
-      if: steps.clang-format-check.outputs.exit-code == '1'
-      run: exit 1
+      run: |
+        if [ "$CLANG_FORMAT_WARNINGS" == "true" ]; then
+          echo "Clang-format warnings found"
+          exit 1
+        else
+          echo "No clang-format warnings found"
+        fi
