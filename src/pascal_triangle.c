@@ -1,7 +1,7 @@
-#include "pascal_functions.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "pascal_functions.h"
 
 
 int main() {
