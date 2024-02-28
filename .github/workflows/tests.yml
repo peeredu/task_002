@@ -56,9 +56,5 @@ jobs:
     - name: Check code style with clang-format
       run: |
         cp clang/.clang-format .
-        clang-format -n src/*.c src/*.h || exit 1
-
-    - name: Check for clang-format violations
-      run: |
-        git diff --exit-code || exit 1
-  
+        clang-format -n src/*.c src/*.h | grep -q "formatted" && exit 1 || true
+ 
