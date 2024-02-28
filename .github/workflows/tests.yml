@@ -56,5 +56,9 @@ jobs:
     - name: Check code style with clang-format
       run: |
         cp clang/.clang-format src/
-        clang-format -n src/*.c src/*.h
+        clang-format -n src/*.c src/*.h | tee /dev/tty | (grep -q "warning" && exit 1 || exit 0)
+
+    - name: Fail if clang-format warnings found
+      run: exit 1
+      if: failure()
  
