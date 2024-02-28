@@ -53,10 +53,8 @@ jobs:
       run: |
         sudo apt-get install -y clang-format
 
-    - name: Check Code Style with clang-format
+    - name: Check code style with clang-format
       run: |
-        if [ -n "$(clang-format -output-replacements-xml -n -style=file $(find . -name '*.cpp' -or -name '*.h'))" ]; then
-          echo "Code style issues found. Please run clang-format to fix them.";
-          exit 1;
-        fi
-      shell: bash
+        chmod +x ./check_style.sh
+        ./check_style.sh
+  
