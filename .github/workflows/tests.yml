@@ -49,6 +49,9 @@ jobs:
     - name: Check code style with clang-format
       run: |
         cp clang/.clang-format .
-        clang-format -n --Werror src/*.c src/*.h
-
- 
+        if clang-format -n --Werror src/*.c src/*.h; then
+          echo "clang-format check passed"
+        else
+          echo "clang-format check failed. Hey, frogger, use clang-format to fix the style issues."
+          exit 1
+        fi

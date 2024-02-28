@@ -1,11 +1,11 @@
 #include <stdio.h>
+
 #include "pascal_functions.h"
 #include <stdlib.h>
 
 
 int binom_coeff(int n, int k) {
-    if (k == 0 || k == n) 
-    {
+    if (k == 0 || k == n) {
         return 1;
     }
 
