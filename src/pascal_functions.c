@@ -1,5 +1,6 @@
-#include <stdio.h>
 #include "pascal_functions.h"
+
+#include <stdio.h>
 
 int binom_coeff(int n, int k) {
     if (k == 0 || k == n) {
