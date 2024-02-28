@@ -54,11 +54,20 @@ jobs:
         sudo apt-get install -y clang-format
 
     - name: Check code style with clang-format
+      id: clang-format-check
       run: |
         cp clang/.clang-format src/
-        clang-format -n src/*.c src/*.h | tee /dev/tty | (grep -q "warning" && exit 1 || exit 0)
+        if clang-format -n src/*.c src/*.h | tee /dev/tty | (grep -q "warning" && echo "::set-output name=warnings::true" || echo "::set-output name=warnings::false")
+        then
+          echo "No clang-format warnings found"
+        else
+          echo "Clang-format warnings found"
+        fi
+
+    - name: Set output variable
+      if: steps.clang-format-check.outputs.warnings == 'true'
+      run: echo "Clang-format warnings found" && echo "::set-output name=exit-code::1" || echo "::set-output name=exit-code::0"
 
     - name: Fail if clang-format warnings found
+      if: steps.clang-format-check.outputs.exit-code == '1'
       run: exit 1
-      if: failure()
- 
