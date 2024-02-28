@@ -34,32 +34,21 @@ jobs:
         name: pytest-results
         path: pytest_report.html
 
-    # - name: Install clang-format
-    #   run: sudo apt-get install -y clang-format
 
-    # - name: Check clang-format
-    #   run: |
-    #     for file in $(git ls-files 'src/*.c' 'src/*.h'); do
-    #       clang-format -n -style=$(pwd)/clang/.clang-format $file
-    #     done
-  clang-format-check:
+  style-check:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install clang-format
-      run: sudo apt-get install clang-format
+    - name: Set up clang-format
+      run: |
+        sudo apt-get install -y clang-format
 
-    - name: Check code formatting
+    - name: Check code style with clang-format
       run: |
         cp clang/.clang-format .
-        CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '\.(c|h)$')
-        if [ -n "$CHANGED_FILES" ]; then
-          for FILE in $CHANGED_FILES; do
-            clang-format -style=file -output-replacements-xml $FILE | grep -q "<replacement " && echo "Error: Code formatting issues in $FILE" && exit 1
-          done
-        else
-          echo "No C or H files changed."
-        fi
+        clang-format -n --Werror src/*.c src/*.h
+
+ 
