@@ -2,7 +2,6 @@
 
 #include "pascal_functions.h"
 
-
 int binom_coeff(int n, int k) {
     if (k == 0 || k == n) {
         return 1;

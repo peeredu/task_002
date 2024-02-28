@@ -3,7 +3,6 @@
 
 #include "pascal_functions.h"
 
-
 int main() {
     int number_lines;
     if (scanf("%d", &number_lines) == 1 && number_lines > 0 && number_lines <= 30) {
