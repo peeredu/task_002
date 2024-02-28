@@ -55,6 +55,5 @@ jobs:
 
     - name: Check code style with clang-format
       run: |
-        cp clang/.clang-format src/
-        clang-format -n src/*.c src/*.h | grep -q "formatted" && exit 1 || true
- 
+        cp clang/.clang-format .
+        git diff --exit-code --name-only ${{ github.event.before }} ${{ github.sha }} -- '*.c' '*.h' | xargs clang-format-diff -p1 -n || exit 1
