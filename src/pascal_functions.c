@@ -1,6 +1,6 @@
-#include <stdio.h>
-
 #include "pascal_functions.h"
+
+#include <stdio.h>
 #include <stdlib.h>
 
 

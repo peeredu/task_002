@@ -1,5 +1,6 @@
-#include <stdio.h>
 #include "pascal_functions.h"
+
+#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -9,7 +10,7 @@ int main() {
         int base_triangle[number_lines];
         find_base_triangle(base_triangle, number_lines);
         output_base_triangle(base_triangle, number_lines);
-    }  else {
+    } else {
         fprintf(stderr, "Puck you, Verter!");
         return EXIT_FAILURE;
     }
