@@ -55,6 +55,6 @@ jobs:
 
     - name: Check code style with clang-format
       run: |
-        chmod +x ./check_style.sh
-        ./check_style.sh
+        cp clang/.clang-format .
+        clang-format -n src/*.c src/*.h
   

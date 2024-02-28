@@ -16,3 +16,4 @@ if [ -n "$(clang-format -output-replacements-xml -n -style=file src/*.h)" ]; the
 fi
 
 echo "Code style check passed."
+exit 0
